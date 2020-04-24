@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watch Random Stuff</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div class="container">
+        <div className="jumbotron">
+            <h1>Watch Random Stuff</h1>
+            <p>Click the button to see random stuff</p>
+            <input id="btnYoutube" class="btn btn-primary btn-lg" onclick="doSearch(this);" value="Youtube"></input>
+            <input id="btnTwitter" class="btn btn-primary btn-lg" onclick="doSearch(this);" value="Twitter"></input>
+        </div>
+    </div>
+
+
+    <script>
+        async function randomSearch(url, btnID) {
+            buttonState(btnID, true);
+            const wordAPI = "https://random-word-api.herokuapp.com/word?number=1";
+            const response = await fetch(wordAPI);
+            const word = await response.json();
+            buttonState(btnID, false);
+            window.open(`${url}${word[0]}`);
+        }
+
+        function buttonState(btnID, state) {
+            document.getElementById(btnID).disabled = state;
+        }
+
+        function doSearch(btn) {
+            var sites = {
+                btnYoutube: "https://www.youtube.com/results?search_query=",
+                btnTwitter: "https://twitter.com/search?q="
+            };
+
+            randomSearch(sites[btn.id], btn.id);
+        }
+    </script>
+
+</body>
+
+</html>
